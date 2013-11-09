@@ -1,7 +1,8 @@
 *.pyc
 .coverage
-.tox
-docs/_build
 dist
+docs/_build
 htmlcov
 MANIFEST
+README
+.tox

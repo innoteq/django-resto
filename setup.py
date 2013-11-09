@@ -4,10 +4,15 @@ import os
 # Avoid polluting the .tar.gz with ._* files under Mac OS X
 os.putenv('COPYFILE_DISABLE', 'true')
 
+# Prevent distutils from complaining that a standard file wasn't found
+README = os.path.join(os.path.dirname(__file__), 'README')
+if not os.path.exists(README):
+    os.symlink(README + '.rst', README)
+
 description = ('REplicated STOrage for Django, file backends '
                'that mirror media files to several servers over HTTP')
 
-with open(os.path.join(os.path.dirname(__file__), 'README')) as f:
+with open(README) as f:
     long_description = '\n\n'.join(f.read().split('\n\n')[2:8])
 
 distutils.core.setup(
