@@ -18,9 +18,9 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.utils import unittest
 
-from ..storage import (DistributedStorage, HybridStorage, AsyncStorage,
+from .storage import (DistributedStorage, HybridStorage, AsyncStorage,
         UnexpectedStatusCode)
-from .http_server import HttpServerTestCaseMixin, ExtraHttpServerTestCaseMixin
+from .test_http_server import HttpServerTestCaseMixin, ExtraHttpServerTestCaseMixin
 
 
 class StorageUtilitiesMixin(HttpServerTestCaseMixin):

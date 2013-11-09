@@ -166,8 +166,8 @@ Setup
 Installation guide
 ------------------
 
-django-resto requires Python 2.6, 2.7, 3.2 or 3.3. It works with Django 1.4 or
-1.5 (and should work with 1.6 once it's released).
+django-resto works with Django 1.4 or later, and with any supported Python
+version except 2.5.
 
 1.  Download and install the package from PyPI::
 

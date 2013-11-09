@@ -26,7 +26,6 @@ distutils.core.setup(
     download_url='http://pypi.python.org/pypi/django-resto',
     packages=[
         'django_resto',
-        'django_resto.tests',
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

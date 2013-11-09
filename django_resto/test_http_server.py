@@ -11,8 +11,8 @@ except ImportError:
 from django.conf import settings
 from django.utils import unittest
 
-from ..http_server import TestHttpServer
-from ..storage import GetRequest, HeadRequest, DeleteRequest, PutRequest
+from .http_server import TestHttpServer
+from .storage import GetRequest, HeadRequest, DeleteRequest, PutRequest
 
 
 class HttpServerTestCaseMixin(object):

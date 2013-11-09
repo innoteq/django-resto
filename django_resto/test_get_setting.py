@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.utils import unittest
 
-from ..settings import get_setting
+from .settings import get_setting
 
 
 class SettingsTestCase(unittest.TestCase):

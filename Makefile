@@ -1,16 +1,15 @@
+export PYTHONPATH:=.:$(PYTHONPATH)
+export DJANGO_SETTINGS_MODULE:=django_resto.test_settings
+
 test:
-	PYTHONPATH=.:$(PYTHONPATH) \
-	DJANGO_SETTINGS_MODULE=django_resto.tests.test_settings \
 	django-admin.py test django_resto
 
 coverage:
 	coverage erase
-	PYTHONPATH=.:$(PYTHONPATH) \
-	DJANGO_SETTINGS_MODULE=django_resto.tests.test_settings \
-	coverage run --source=django_resto `which django-admin.py` test django_resto
+	coverage run --branch --source=django_resto `which django-admin.py` test django_resto
 	coverage html
 
 clean:
 	find . -name '*.pyc' -delete
 	find . -name __pycache__ -delete
-	rm -rf django_resto/tests/tests .coverage docs/_build dist htmlcov MANIFEST
+	rm -rf django_resto/tests .coverage dist docs/_build htmlcov MANIFEST

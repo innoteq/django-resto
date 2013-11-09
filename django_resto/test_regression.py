@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.utils import unittest
 
-from .storage import StorageUtilitiesMixin, UseDistributedStorageMixin
+from .test_storage import StorageUtilitiesMixin, UseDistributedStorageMixin
 
 
 class RegressionTestCase(
