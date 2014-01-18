@@ -100,7 +100,7 @@ class TestHttpServer(HTTPServer):
     self.override_code and self.readonly are used to test invalid behaviors.
     """
 
-    def __init__(self, host='localhost', port=4080):
+    def __init__(self, host=str('localhost'), port=4080):
         self.files = {}
         self.log = []
         self.override_code = None
@@ -138,7 +138,7 @@ class TestHttpServer(HTTPServer):
             self.running = False
             # Make a random query to unblock the main loop.
             try:
-                urlopen('http://%s:%d/' % self.server_address, timeout=timeout)
+                urlopen(str('http://%s:%d/') % self.server_address, timeout=timeout)
             except (URLError, socket.timeout):
                 pass
         else:                                               # cover: disable

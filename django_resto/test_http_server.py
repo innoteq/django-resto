@@ -22,11 +22,11 @@ CONTENT = '¡test!'.encode('utf-8')
 
 class HttpServerTestCaseMixin(object):
 
-    host = 'localhost'
+    host = str('localhost')
     port = 4080
-    filename = 'test.txt'
-    path = '/' + filename
-    url = 'http://%s:%d%s' % (host, port, path)
+    filename = str('test.txt')
+    path = str('/') + filename
+    url = str('http://%s:%d%s') % (host, port, path)
     filepath = os.path.join(settings.MEDIA_ROOT, filename)
     num_threads = 1
 
@@ -74,7 +74,7 @@ class ExtraHttpServerTestCaseMixin(object):
         self.alt_thread = threading.Thread(target=self.alt_http_server.run)
         self.alt_thread.daemon = True
         self.alt_thread.start()
-        self.alt_url = 'http://%s:%d/' % (self.host, self.port + 1)
+        self.alt_url = str('http://%s:%d/') % (self.host, self.port + 1)
 
     def tearDown(self):
         self.alt_http_server.stop()

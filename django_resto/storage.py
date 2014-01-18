@@ -45,25 +45,25 @@ class GetRequest(Request):
     """HTTP GET request."""
     # This adds nothing to urllib, but it's there for consistency.
     def get_method(self):
-        return 'GET'
+        return str('GET')
 
 
 class HeadRequest(Request):
     """HTTP HEAD request."""
     def get_method(self):
-        return 'HEAD'
+        return str('HEAD')
 
 
 class DeleteRequest(Request):
     """HTTP DELETE request."""
     def get_method(self):
-        return 'DELETE'
+        return str('DELETE')
 
 
 class PutRequest(Request):
     """HTTP PUT request."""
     def get_method(self):
-        return 'PUT'
+        return str('PUT')
 
 
 class DefaultTransport(object):
@@ -76,18 +76,18 @@ class DefaultTransport(object):
     timeout = get_setting('TIMEOUT')
 
     def __init__(self, base_url):
-        scheme, netloc, path, query, fragment = urlsplit(base_url)
+        scheme, netloc, path, query, fragment = urlsplit(str(base_url))
         if query or fragment:
             raise ValueError('base_url may not contain a query or fragment.')
-        self.scheme = scheme or 'http'
-        self.path = path or '/'
+        self.scheme = scheme or str('http')
+        self.path = path or str('/')
 
     ### Hooks for custom transports
 
     def _get_url(self, host, name):
         """Return the full URL for a file on a given host."""
         path = self.path + quote(name.encode('utf-8'))
-        return urlunsplit((self.scheme, host, path, '', ''))
+        return urlunsplit((self.scheme, str(host), path, str(''), str('')))
 
     def _http_request(self, request):
         """Return a response object for a given request."""
