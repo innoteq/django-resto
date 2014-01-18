@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from __future__ import unicode_literals
 
 import os.path
@@ -13,6 +15,9 @@ from django.utils import unittest
 
 from .http_server import TestHttpServer
 from .storage import GetRequest, HeadRequest, DeleteRequest, PutRequest
+
+
+CONTENT = '¡test!'.encode('utf-8')
 
 
 class HttpServerTestCaseMixin(object):
@@ -109,9 +114,9 @@ class HttpServerTestCase(HttpServerTestCaseMixin, unittest.TestCase):
 
     def test_get(self):
         self.assertHTTPErrorCode(404, GetRequest(self.url))
-        self.http_server.create_file(self.filename, b'test')
+        self.http_server.create_file(self.filename, CONTENT)
         body = self.assertHttpSuccess(GetRequest(self.url))
-        self.assertEqual(body, b'test')
+        self.assertEqual(body, CONTENT)
         self.assertServerLogIs([
             ('GET', self.path, 404),
             ('GET', self.path, 200),
@@ -119,7 +124,7 @@ class HttpServerTestCase(HttpServerTestCaseMixin, unittest.TestCase):
 
     def test_head(self):
         self.assertHTTPErrorCode(404, HeadRequest(self.url))
-        self.http_server.create_file(self.filename, b'test')
+        self.http_server.create_file(self.filename, CONTENT)
         body = self.assertHttpSuccess(HeadRequest(self.url))
         self.assertEqual(body, b'')
         self.assertServerLogIs([
@@ -131,14 +136,14 @@ class HttpServerTestCase(HttpServerTestCaseMixin, unittest.TestCase):
         # delete a non-existing file
         self.assertHTTPErrorCode(404, DeleteRequest(self.url))
         # delete an existing file
-        self.http_server.create_file(self.filename, b'test')
+        self.http_server.create_file(self.filename, CONTENT)
         body = self.assertHttpSuccess(DeleteRequest(self.url))
         self.assertEqual(body, b'')
         self.assertFalse(self.http_server.has_file(self.filename))
         # attempt to put in read-only mode
-        self.http_server.create_file(self.filename, b'test')
+        self.http_server.create_file(self.filename, CONTENT)
         self.http_server.readonly = True
-        self.assertHTTPErrorCode(403, DeleteRequest(self.url, b'test'))
+        self.assertHTTPErrorCode(403, DeleteRequest(self.url, CONTENT))
         self.assertServerLogIs([
             ('DELETE', self.path, 404),
             ('DELETE', self.path, 204),
@@ -147,16 +152,16 @@ class HttpServerTestCase(HttpServerTestCaseMixin, unittest.TestCase):
 
     def test_put(self):
         # put a non-existing file
-        body = self.assertHttpSuccess(PutRequest(self.url, b'test'))
+        body = self.assertHttpSuccess(PutRequest(self.url, CONTENT))
         self.assertEqual(body, b'')
-        self.assertEqual(self.http_server.get_file(self.filename), b'test')
+        self.assertEqual(self.http_server.get_file(self.filename), CONTENT)
         # put an existing file
-        body = self.assertHttpSuccess(PutRequest(self.url, b'test2'))
+        body = self.assertHttpSuccess(PutRequest(self.url, CONTENT * 2))
         self.assertEqual(body, b'')
-        self.assertEqual(self.http_server.get_file(self.filename), b'test2')
+        self.assertEqual(self.http_server.get_file(self.filename), CONTENT * 2)
         # attempt to put in read-only mode
         self.http_server.readonly = True
-        self.assertHTTPErrorCode(403, PutRequest(self.url, b'test'))
+        self.assertHTTPErrorCode(403, PutRequest(self.url, CONTENT))
         self.assertServerLogIs([
             ('PUT', self.path, 201),
             ('PUT', self.path, 204),
