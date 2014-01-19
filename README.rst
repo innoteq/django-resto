@@ -338,6 +338,11 @@ The stable APIs are:
 History
 =======
 
+1.2
+---
+
+* Fix unicode handling bugs on Python 2.
+
 1.1
 ---
 

@@ -1,5 +1,6 @@
-import distutils.core
 import os
+
+import setuptools
 
 # Avoid polluting the .tar.gz with ._* files under Mac OS X
 os.putenv('COPYFILE_DISABLE', 'true')
@@ -15,9 +16,9 @@ description = ('REplicated STOrage for Django, file backends '
 with open(README) as f:
     long_description = '\n\n'.join(f.read().split('\n\n')[2:8])
 
-distutils.core.setup(
+setuptools.setup(
     name='django-resto',
-    version='1.1',
+    version='1.2',
     author='Aymeric Augustin',
     author_email='aymeric.augustin@m4x.org',
     url='https://github.com/aaugustin/django-resto',
