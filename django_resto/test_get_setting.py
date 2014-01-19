@@ -11,4 +11,5 @@ class SettingsTestCase(unittest.TestCase):
         self.assertTrue(get_setting('TIMEOUT') > 0)
 
     def test_get_non_existing_setting(self):
-        self.assertRaises(KeyError, get_setting, 'TIME-OUT')
+        with self.assertRaises(KeyError):
+            get_setting('TIME-OUT')
