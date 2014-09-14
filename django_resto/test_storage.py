@@ -18,6 +18,7 @@ except ImportError:
 
 from django.conf import settings
 from django.core.files.base import ContentFile
+from django.utils import six
 from django.utils import unittest
 
 from .storage import (DistributedStorage, HybridStorage, AsyncStorage,
@@ -174,12 +175,13 @@ class HybridStorageTestCaseMixin(object):
 
     def test_get_available_name_existing(self):
         self.create_file('test.txt', CONTENT)
-        self.assertEqual(self.storage.get_available_name('test.txt'), 'test_1.txt')
+        filename = self.storage.get_available_name('test.txt')
+        six.assertRegex(self, filename, r'^test_\w+\.txt$')
         if self.use_fs:
             self.assertAnyServerLogIs([])
         else:
             self.assertAnyServerLogIs([('HEAD', '/test.txt', 200),
-                                       ('HEAD', '/test_1.txt', 404)])
+                                       ('HEAD', '/' + filename, 404)])
 
     def test_get_valid_name(self):
         self.assertEqual(self.storage.get_valid_name('test.txt'), 'test.txt')
@@ -238,14 +240,14 @@ class HybridStorageTestCaseMixin(object):
         self.create_file('test.txt', CONTENT)
         filename = self.storage.save('test.txt', ContentFile(CONTENT * 2))
         # a new file is generated
-        self.assertEqual(filename, 'test_1.txt')
-        self.assertEqual(self.get_file('test_1.txt'), CONTENT * 2)
+        six.assertRegex(self, filename, r'^test_\w+\.txt$')
+        self.assertEqual(self.get_file(filename), CONTENT * 2)
         if self.use_fs:
-            self.assertEachServerLogIs([('PUT', '/test_1.txt', 201)])
+            self.assertEachServerLogIs([('PUT', '/' + filename, 201)])
         else:
             self.assertAnyServerLogIs([('HEAD', '/test.txt', 200),
-                                       ('HEAD', '/test_1.txt', 404)] +
-                                      [('PUT', '/test_1.txt', 201)] * len(self.storage.hosts))
+                                       ('HEAD', '/' + filename, 404)] +
+                                      [('PUT', '/' + filename, 201)] * len(self.storage.hosts))
 
     def test_save_readonly(self):
         self.http_server.readonly = True
