@@ -166,8 +166,10 @@ Setup
 Installation guide
 ------------------
 
-django-resto works with Django 1.4 or later, and with any supported Python
-version except 2.5.
+django-sesame is tested with:
+
+- Django 1.4 (LTS), 1.6 and 1.7,
+- all supported Python versions (except Python 2.5 for Django 1.4).
 
 1.  Download and install the package from PyPI::
 
