@@ -166,7 +166,7 @@ Setup
 Installation guide
 ------------------
 
-django-sesame is tested with:
+django-resto is tested with:
 
 - Django 1.4 (LTS), 1.6 and 1.7,
 - all supported Python versions (except Python 2.5 for Django 1.4).
