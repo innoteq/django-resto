@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 
 import socket
-try:                                                        # cover: disable
+try:
     from http.server import BaseHTTPRequestHandler, HTTPServer
     from urllib.parse import unquote
     from urllib.request import URLError, urlopen
-except ImportError:
+except ImportError:                                         # pragma: no cover
     from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
     from urllib import unquote
     from urllib2 import URLError, urlopen
@@ -20,9 +20,9 @@ class TestHttpServerRequestHandler(BaseHTTPRequestHandler):
 
     @property
     def filename(self):
-        if isinstance(self.path, bytes):                # Python 2
+        if isinstance(self.path, bytes):                    # pragma: no cover
             return unquote(self.path.lstrip(b'/')).decode('utf-8')
-        else:                                           # cover: disable
+        else:
             return unquote(self.path.lstrip('/'))
 
     @property
@@ -141,5 +141,5 @@ class TestHttpServer(HTTPServer):
                 urlopen(str('http://%s:%d/') % self.server_address, timeout=timeout)
             except (URLError, socket.timeout):
                 pass
-        else:                                               # cover: disable
+        else:                                               # pragma: no cover
             print("Warning: stop() called with server wasn't running!")

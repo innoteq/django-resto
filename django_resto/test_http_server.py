@@ -6,7 +6,7 @@ import os.path
 import threading
 try:
     from urllib.request import URLError, urlopen
-except ImportError:
+except ImportError:                                         # pragma: no cover
     from urllib2 import URLError, urlopen
 
 

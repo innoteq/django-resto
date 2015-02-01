@@ -13,7 +13,7 @@ import threading
 import time
 try:
     from urllib.request import HTTPError
-except ImportError:
+except ImportError:                                         # pragma: no cover
     from urllib2 import HTTPError
 
 from django.conf import settings

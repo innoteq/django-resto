@@ -4,10 +4,10 @@ import logging
 import random
 import sys
 import threading
-try:                                                        # cover: disable
+try:
     from urllib.parse import quote, urljoin, urlsplit, urlunsplit
     from urllib.request import HTTPError, Request, URLError, urlopen
-except ImportError:
+except ImportError:                                         # pragma: no cover
     from urllib import quote
     from urllib2 import HTTPError, Request, URLError, urlopen
     from urlparse import urljoin, urlsplit, urlunsplit
@@ -105,7 +105,7 @@ class DefaultTransport(object):
         if resp.code != 200:
             raise UnexpectedStatusCode(resp)
         length = resp.info().get('Content-Length')
-        if length is None:                                  # cover: disable
+        if length is None:                                  # pragma: no cover
             return resp.read()
         else:
             return resp.read(int(length))
@@ -140,7 +140,7 @@ class DefaultTransport(object):
         if resp.code != 200:
             raise UnexpectedStatusCode(resp)
         length = resp.info().get('Content-Length')
-        if length is None:
+        if length is None:                                  # pragma: no cover
             raise NotImplementedError("The HTTP server did not provide a"
                     "content length for %r." % resp.geturl())
         return int(length)
@@ -190,10 +190,10 @@ class DistributedStorageMixin(object):
     show_traceback = get_setting('SHOW_TRACEBACK')
 
     def __init__(self, hosts=None, base_url=None, transport=DefaultTransport):
-        if hosts is None:                                   # cover: disable
+        if hosts is None:                                   # pragma: no cover
             hosts = get_setting('MEDIA_HOSTS')
         self.hosts = hosts
-        if base_url is None:                                # cover: disable
+        if base_url is None:                                # pragma: no cover
             base_url = settings.MEDIA_URL
         self.base_url = base_url
         self.transport = transport(base_url=base_url)
@@ -247,7 +247,7 @@ class DistributedStorage(DistributedStorageMixin, Storage):
     def _open(self, name, mode='rb'):
         # Allowing writes would be doable, if we distribute the file to the
         # media servers when it's closed. Let's forbid it for now.
-        if mode != 'rb':                                    # cover: disable
+        if mode != 'rb':                                    # pragma: no cover
             raise IOError('Unsupported mode %r, use %r.' % (mode, 'rb'))
         host = random.choice(self.hosts)
         try:
@@ -312,7 +312,7 @@ class HybridStorage(DistributedStorageMixin, FileSystemStorage):
 
     def _open(self, name, mode='rb'):
         # Writing is forbidden, see DistributedStorage._open.
-        if mode != 'rb':                                    # cover: disable
+        if mode != 'rb':                                    # pragma: no cover
             raise IOError('Unsupported mode %r, use %r.' % (mode, 'rb'))
         return FileSystemStorage._open(self, name, mode)
 
