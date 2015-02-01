@@ -5,9 +5,9 @@ test:
 	django-admin.py test django_resto
 
 coverage:
-	coverage erase
-	coverage run --branch --source=django_resto `which django-admin.py` test django_resto
-	coverage html
+	python -m coverage erase
+	python -m coverage run --branch --source=django_resto `which django-admin.py` test django_resto
+	python -m coverage html
 
 clean:
 	find . -name '*.pyc' -delete
