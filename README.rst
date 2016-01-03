@@ -1,6 +1,13 @@
 django-resto: replicated media storage for Django
 #################################################
 
+**DEPRECATED: while django-resto was a fun hack, using a public or private
+cloud storage service coupled to a CDN is a better choice these days.**
+
+**WARNING: the architecture described below isn't a best practice anymore.**
+
+*Get in touch if you're using it and would like to maintain it in the future!*
+
 Introduction
 ============
 
@@ -23,7 +30,7 @@ consistency, while django_dust is more concerned with availability.
 
 django-resto is released under the BSD license, like Django itself.
 
-.. _storage API: http://docs.djangoproject.com/en/dev/ref/files/storage/
+.. _storage API: http://docs.djangoproject.com/en/stable/ref/files/storage/
 .. _django-resto: https://github.com/aaugustin/django-resto
 .. _django_dust: https://github.com/isagalaev/django_dust
 
