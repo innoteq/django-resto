@@ -173,10 +173,7 @@ Setup
 Installation guide
 ------------------
 
-django-resto is tested with:
-
-- Django 1.4 (LTS) and 1.8 (LTS),
-- all supported Python versions (except Python 2.5 for Django 1.4).
+django-resto is tested with Django ≥ 1.8 and all supported Python versions.
 
 1.  Download and install the package from PyPI::
 

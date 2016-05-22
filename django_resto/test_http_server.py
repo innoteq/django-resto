@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 import os.path
 import threading
+import unittest
 try:
     from urllib.request import URLError, urlopen
 except ImportError:                                         # pragma: no cover
@@ -11,7 +12,6 @@ except ImportError:                                         # pragma: no cover
 
 
 from django.conf import settings
-from django.utils import unittest
 
 from .http_server import TestHttpServer
 from .storage import GetRequest, HeadRequest, DeleteRequest, PutRequest

@@ -11,6 +11,7 @@ import pickle
 import shutil
 import threading
 import time
+import unittest
 try:
     from urllib.request import HTTPError
 except ImportError:                                         # pragma: no cover
@@ -19,7 +20,6 @@ except ImportError:                                         # pragma: no cover
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.utils import six
-from django.utils import unittest
 
 from .storage import (DistributedStorage, HybridStorage, AsyncStorage,
         UnexpectedStatusCode)
