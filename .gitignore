@@ -1,8 +1,10 @@
+*.egg-info
 *.pyc
 .coverage
+.tox
+build
 dist
 docs/_build
 htmlcov
 MANIFEST
 README
-.tox
