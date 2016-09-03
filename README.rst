@@ -344,6 +344,11 @@ The stable APIs are:
 History
 =======
 
+1.3
+---
+
+* Update supported Django versions.
+
 1.2
 ---
 
