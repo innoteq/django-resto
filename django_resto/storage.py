@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
 
+import os
 import logging
 import random
 import sys
 import threading
+from datetime import datetime
 try:
     from urllib.parse import quote, urljoin, urlsplit, urlunsplit
     from urllib.request import HTTPError, Request, URLError, urlopen
@@ -226,6 +228,26 @@ class DistributedStorageMixin(object):
         if exceptions and self.fatal_exceptions:
             # Let's raise a random exception, we've logged them all anyway
             raise exceptions.popitem()[1][1]
+
+    def _datetime_from_timestamp(self, ts):
+        """
+        If timezone support is enabled, make an aware datetime object in UTC;
+        otherwise make a naive one in the local timezone.
+        """
+        if settings.USE_TZ:
+            # Safe to use .replace() because UTC doesn't have DST
+            return datetime.utcfromtimestamp(ts).replace(tzinfo=timezone.utc)
+        else:
+            return datetime.fromtimestamp(ts)
+
+    def get_accessed_time(self, name):
+        return self._datetime_from_timestamp(os.path.getatime(self.path(name)))
+
+    def get_created_time(self, name):
+        return self._datetime_from_timestamp(os.path.getctime(self.path(name)))
+
+    def get_modified_time(self, name):
+        return self._datetime_from_timestamp(os.path.getmtime(self.path(name)))
 
 
 class DistributedStorage(DistributedStorageMixin, Storage):
