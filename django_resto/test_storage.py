@@ -107,22 +107,22 @@ class HybridStorageTestCaseMixin(object):
 
     def test_accessed_time(self):
         self.create_file('test.txt', CONTENT)
-        self.assertIsInstance(self.storage.accessed_time('test.txt'), datetime.datetime)
+        self.assertIsInstance(self.storage.get_accessed_time('test.txt'), datetime.datetime)
         self.assertEachServerLogIs([])  # overridden when self.use_fs = False
 
     def test_accessed_time_non_existing(self):
         with self.assertRaises(EnvironmentError):
-            self.storage.accessed_time('test.txt')
+            self.storage.get_accessed_time('test.txt')
         self.assertEachServerLogIs([])  # overridden when self.use_fs = False
 
     def test_created_time(self):
         self.create_file('test.txt', CONTENT)
-        self.assertIsInstance(self.storage.created_time('test.txt'), datetime.datetime)
+        self.assertIsInstance(self.storage.get_created_time('test.txt'), datetime.datetime)
         self.assertEachServerLogIs([])  # overridden when self.use_fs = False
 
     def test_created_time_non_existing(self):
         with self.assertRaises(EnvironmentError):
-            self.storage.created_time('test.txt')
+            self.storage.get_created_time('test.txt')
         self.assertEachServerLogIs([])  # overridden when self.use_fs = False
 
     def test_delete(self):
@@ -203,12 +203,12 @@ class HybridStorageTestCaseMixin(object):
 
     def test_modified_time(self):
         self.create_file('test.txt', CONTENT)
-        self.assertIsInstance(self.storage.modified_time('test.txt'), datetime.datetime)
+        self.assertIsInstance(self.storage.get_modified_time('test.txt'), datetime.datetime)
         self.assertEachServerLogIs([])  # overridden when self.use_fs = False
 
     def test_modified_time_non_existing(self):
         with self.assertRaises(EnvironmentError):
-            self.storage.modified_time('test.txt')
+            self.storage.get_modified_time('test.txt')
         self.assertEachServerLogIs([])  # overridden when self.use_fs = False
 
     def test_open(self):
@@ -328,13 +328,13 @@ class DistributedStorageTestCaseMixin(HybridStorageTestCaseMixin):
 
     def test_accessed_time(self):
         with self.assertRaises(NotImplementedError):
-            self.storage.accessed_time('test.txt')
+            self.storage.get_accessed_time('test.txt')
 
     test_accessed_time_non_existing = test_accessed_time
 
     def test_created_time(self):
         with self.assertRaises(NotImplementedError):
-            self.storage.created_time('test.txt')
+            self.storage.get_created_time('test.txt')
 
     test_created_time_non_existing = test_created_time
 
@@ -364,7 +364,7 @@ class DistributedStorageTestCaseMixin(HybridStorageTestCaseMixin):
 
     def test_modified_time(self):
         with self.assertRaises(NotImplementedError):
-            self.storage.modified_time('test.txt')
+            self.storage.get_modified_time('test.txt')
 
     test_modified_time_non_existing = test_modified_time
 
